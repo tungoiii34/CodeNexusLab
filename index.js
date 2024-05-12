@@ -1,17 +1,20 @@
-function combinationSum(candidates, target) {
-  const result = [];
-  backtrack(0, [], 0);
-  return result;
-  function backtrack(start, current, sum) {
-    if (sum === target) {
-      result.push([...current]);
-      return;
-    }
-    if (sum > target || start === candidates.length) return;
-    for (let i = start; i < candidates.length; i++) {
-      current.push(candidates[i]);
-      backtrack(i, current, sum + candidates[i]);
-      current.pop();
+function detectCycle(head) {
+  let slow = head;
+  let fast = head;
+  let hasCycle = false;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) {
+      hasCycle = true;
+      break;
     }
   }
+  if (!hasCycle) return null;
+  slow = head;
+  while (slow !== fast) {
+    slow = slow.next;
+    fast = fast.next;
+  }
+  return slow;
 }
